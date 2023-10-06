@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все пользователи</title>
+</head >
+<body>
+
+<!--<a th:href="user/new">Добавить нового пользователя</a>-->
+
+<a>Нажмите на Логин для полной информации</a>
+<table border="1">
+    <tbody>
+    <tr>
+        <th>Id</th>
+        <th>Логин</th>
+
+
+    </tr>
+        <tr th:each="user : ${allUser}">
+        <td th:text="${user.getId()}">value</td>
+
+        <td> <a th:href="@{/admin/user/{id}(id=${user.getId()})}" th:text="${user.getUsername()}"> </a></td>
+
+
+    </tbody>
+</table>
+<br>
+<a href="user/new">Добавить нового пользователя</a>
+
+
+
+<!--<a>Введите ID пользователя, о котором хотите посмотреть подробнее</a>-->
+<!--<div>-->
+<!--    <form id="myForm" method="GET" action="/user/">-->
+<!--        <div>-->
+<!--            <label for="ID">ID</label>-->
+
+<!--            <input type="text" id="ID"/>-->
+<!--            <br>-->
+<!--            <input type="submit" value="Найти" onclick="addIdToUrl()"/>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!--<script>-->
+
+<!--    function addIdToUrl() {-->
+
+<!--        var id = document.getElementById("ID").value;-->
+
+<!--        var form = document.getElementById("myForm");-->
+
+<!--        var newUrl = form.action + id;-->
+
+<!--        form.action = newUrl;-->
+<!--    }-->
+<!--</script>-->
+
+
+
+
+
+
+
+</body>
+</html>
