@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import javax.transaction.Transactional;
@@ -22,9 +23,12 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
     public User findByUsername(String username) {
        return userRepository.findByUsername(username);
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -70,6 +74,10 @@ public class UserService implements UserDetailsService {
     @Transactional
     public User getById(Long id) {
         return userRepository.getById(id);
+    }
+    @Transactional
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
 

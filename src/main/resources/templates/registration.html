@@ -26,6 +26,22 @@
     <label for="password">Пароль:</label>
     <input type="password" th:field="*{password}" id="password" name="password" required/>
     <br>
+<!--    <label for="roles">Роль:</label>-->
+<!--    <select th:field="*{roles}" id="roles" name="roles">-->
+<!--&lt;!&ndash;    <select id="role" name="role">&ndash;&gt;-->
+<!--        <option value="ROLE_USER">Пользователь</option>-->
+<!--        <option value="ROLE_ADMIN">Администратор</option>-->
+<!--&lt;!&ndash;    </select><br/>&ndash;&gt;-->
+
+
+<!--    <label for="roles">Роль:</label>-->
+<!--    <select id="roles" th:field="*{roles}" multiple required>-->
+<!--        <option value="ROLE_USER">Пользователь</option>-->
+<!--        <option value="ROLE_ADMIN">Администратор</option>-->
+<!--&lt;!&ndash;        <option th:each="role : ${roles}" th:value="${role.name}" th:text="${role.name}"></option>&ndash;&gt;-->
+<!--    </select>-->
+    <br>
+    <br/>
     <input type="submit" value="Зарегистрироваться"/>
 
 <!--    <button type="submit">Зарегистрироваться</button>-->

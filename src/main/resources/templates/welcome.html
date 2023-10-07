@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
@@ -7,6 +7,10 @@
 <body>
 
 Добро пожаловать в мое приложение!
+<br/>
+<a th:href="@{/login}">Войти в систему</a>
+<br/>
+<a th:href="@{/registration}">Зарегистрироваться</a>
 
 </body>
 </html>

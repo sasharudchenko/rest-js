@@ -23,14 +23,11 @@ public class User implements UserDetails {
     private String surname;
     @Column
     private String password;
-
-
-
     @Column(name = "age")
     private Integer age = 0;
     @Column(name = "city")
     private String city;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
@@ -40,12 +37,13 @@ public class User implements UserDetails {
 
 
 
-    public User(String username, String name, String surname, int age, String city) {
+    public User(String username, String name, String surname, int age, String city, List<Role> roles) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.city = city;
+        this.roles = roles;
     }
 
     public Long getId() {

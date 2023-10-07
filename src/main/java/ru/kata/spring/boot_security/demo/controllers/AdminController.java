@@ -22,18 +22,6 @@ public class AdminController {
         return "admin.all";
     }
 
-//    @GetMapping("/user/new")
-//    public String newUser(Model model) {
-//        model.addAttribute("user", new User());
-//        return "admin.new";
-//    }
-//
-//    @PostMapping
-//    public String add(@ModelAttribute("user") User user ) {
-//        userService.add(user);
-//        return "redirect:/user";
-//    }
-
     @GetMapping("/user/{id}")
     public String userById(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getById(id));

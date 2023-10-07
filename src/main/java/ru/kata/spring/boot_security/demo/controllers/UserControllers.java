@@ -13,19 +13,11 @@ import java.security.Principal;
 public class UserControllers {
     @Autowired
     private UserService userService;
-    @GetMapping("/user")
-    public String userByUsername(@PathVariable("id") long id, Model model, Principal principal) {
+    @GetMapping("/user/{id}")
+    public String userByUsername(Model model, Principal principal) {
 
         model.addAttribute("user", userService.findByUsername(principal.getName()));
-        //model.addAttribute("user", userService.getUser(id));
+       // model.addAttribute("user", userService.getUser(id));
         return "user.userById";
     }
-//    @GetMapping("/user/{id}")
-//    public String userById(@PathVariable("id") long id, Model model, Principal principal) {
-//
-//       // model.addAttribute("user", userService.findByUsername(principal.getName()));
-//        model.addAttribute("user", userService.getUser(id));
-//        return "user.userById";
-//    }
-
 }
