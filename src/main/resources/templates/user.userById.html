@@ -16,6 +16,8 @@
     <th>Город</th>
     <th>Логин</th>
     <th>Пароль</th>
+    <th>Роль</th>
+
 
 
   </tr>
@@ -27,6 +29,11 @@
     <td th:text="${user.getCity()}"></td>
     <td th:text="${user.getUsername()}"></td>
     <td th:text="${user.getPassword()}"></td>
+    <td>
+    <span th:each="role : ${user.roles}">
+        <span th:text="${role.name}"></span>
+    </span>
+    </td>
   </tr>
 
 

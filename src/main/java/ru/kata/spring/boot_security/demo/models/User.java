@@ -1,11 +1,14 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -27,7 +30,7 @@ public class User implements UserDetails {
     private Integer age = 0;
     @Column(name = "city")
     private String city;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
@@ -102,6 +105,7 @@ public class User implements UserDetails {
         return roles;
     }
 
+
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
@@ -139,12 +143,14 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", password='" + password + '\'' +
                 ", age=" + age +
                 ", city='" + city + '\'' +
+                ", roles=" + roles +
                 '}';
     }
-
 }
 

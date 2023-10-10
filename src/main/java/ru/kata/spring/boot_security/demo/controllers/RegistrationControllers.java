@@ -3,22 +3,19 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-import ru.kata.spring.boot_security.demo.services.RegistrationService;
-
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import ru.kata.spring.boot_security.demo.services.RegistrationServiceImpl;
 
 @Controller
 @RequestMapping("/registration")
 public class RegistrationControllers {
+
+    private RegistrationServiceImpl registrationService;
     @Autowired
-    private RegistrationService registrationService;
-    @Autowired
-    private RoleRepository roleRepository;
+    public RegistrationControllers(RegistrationServiceImpl registrationService) {
+        this.registrationService = registrationService;
+    }
+
     @GetMapping
     public String registrationPage(@ModelAttribute("user") User user) {
         return "registration";

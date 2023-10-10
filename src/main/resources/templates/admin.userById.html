@@ -16,6 +16,7 @@
         <th>Возраст</th>
         <th>Логин</th>
         <th>Пароль</th>
+        <th>Роль</th>
         <th>Обновить данные</th>
         <th>Удалить пользователя</th>
 
@@ -28,6 +29,12 @@
         <td th:text="${user.getCity()}"></td>
         <td th:text="${user.getAge()}"></td>
         <td th:text="${user.getPassword()}"></td>
+<!--        <td th:text="${user.getAuthorities()}"></td>-->
+        <td>
+    <span th:each="role : ${user.roles}">
+        <span th:text="${role.name}"></span>
+    </span>
+        </td>
         <td>
             <form th:method="GET" th:action="@{/admin/user/{id}/edit(id=${user.getId()})}">
                 <input type="submit" value="ОБНОВИТЬ"/>

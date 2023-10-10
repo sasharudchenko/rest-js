@@ -12,23 +12,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootApplication
 public class SpringBootSecurityDemoApplication {
-	static RoleRepository roleRepo;
-	static UserRepository userRepo;
-//	@Test
-//	public void testAddRoleToNewUser() {
-//		Role roleAdmin = roleRepo.findByName("Admin");
-//
-//		User user = new User("Sasha", "sasha", "rud", 24, "novo");
-//
-//
-//		User savedUser = userRepo.save(user);
-//		assertThat(savedUser.getRoles().size()).isEqualTo(1);
-//
-//	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootSecurityDemoApplication.class, args);
 
 
 	}
+//	внедрения делай через конструктор +
+//
+//	замени EAGER на LAZY+
+//
+//	в service добавь интерфейсы +
+//
+//	при обновлении пользователя нет возможности изменить роль +
+//
+//	данные под колонками сдвинуты ???
 
 }

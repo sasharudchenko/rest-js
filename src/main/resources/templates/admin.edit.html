@@ -32,6 +32,22 @@
     <label for="password">Пароль</label>
     <input type="text" th:field="*{password}" id="password"/>
     <br>
+    <div class="form-group row">
+      <label class ="col-4 col-form-label">Роль</label>
+      <div class="col-8">
+        <th:block th:each="role: ${listRoles}">
+<!--          <input type="checkbox" th:field="*{roles}"-->
+<!--                 th:text="${role.name}" th:value= "${role.id}" class="m-2" />-->
+          <input type="checkbox" th:field="*{roles}"
+                 th:text="${role.name}" th:value="${role.id}" class="m-2" name="roles"/>
+        </th:block>
+      </div>
+    </div>
+
+
+
+<!--    <input type="text" th:field="*{roles}" id="role"/>-->
+    <br>
     <input type="submit" value="Обновить"/>
 
   </div>
