@@ -16,6 +16,7 @@
     <br>
     <label for="username">Логин пользователя:</label>
     <input type="text" th:field="*{username}" id="username" name="username" required/>
+    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" >Username error</div>
     <br>
     <label for="age">Возраст:</label>
     <input type="text" th:field="*{age}" id="age" name="age" required/>

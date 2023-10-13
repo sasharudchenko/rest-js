@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    @Transactional
+    //@Transactional
     @Override
     public User findByUsername(String username) {
        return userRepository.findByUsername(username);
@@ -48,13 +48,13 @@ public class UserServiceImpl implements UserService {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
-    @Transactional
+   // @Transactional()
     @Override
     public User getUser(long id) {
         return userRepository.getById(id);
     }
     @Override
-    @Transactional
+   // @Transactional
     public List<User> allUsers() {
         return userRepository.findAll();
     }
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    @Transactional
+    //@Transactional
     @Override
     public User getById(Long id) {
         return userRepository.findById(id).get();

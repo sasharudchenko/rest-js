@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+
 public class RoleServiceImpl implements RoleService {
 
     private RoleRepository roleRepository;
@@ -18,12 +19,13 @@ public class RoleServiceImpl implements RoleService {
         this.roleRepository = roleRepository;
     }
 
-    @Transactional
+    @Transactional()
+
     @Override
     public Role save(Role role) {
         return roleRepository.save(role);
     }
-    @Transactional
+
     public List<Role> listRoles() {
         return roleRepository.findAll();
 
