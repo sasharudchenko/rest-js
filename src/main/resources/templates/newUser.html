@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Добавить пользователь</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand">Логин:</a>
+                <a class="navbar-brand" th:text="${principal.getName()}"></a>
+                <a class="navbar-brand">Роль:</a>
+                <a class="navbar-brand" th:each="role : ${principal.getRoles()}"
+                   th:text="${role.getName()}"></a>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/logout}">Выход</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+
+
+        <div class="col-sm-1">
+
+
+            <div class="btn-group-vertical">
+
+
+                <th:block th:if="${count1}">
+                    <a th:href="@{/admin}" class="btn btn-primary active" role="button" data-bs-toggle="button"
+                       style="width: 140%">Админ</a>
+                </th:block>
+                <th:block th:if="${count2}">
+                    <a th:href="@{/admin}" class="btn btn-primary active" role="button"
+                       data-bs-toggle="button" style="width: 140%;">Админ</a>
+                    <a th:href="@{/user}" class="btn btn-light text-primary " role="button" data-bs-toggle="button"
+                       style="width: 140%;  background: #ffffff">Юзер</a>
+                </th:block>
+
+            </div>
+
+        </div>
+
+
+        <div class=" col-sm-10  ">
+            <div class="row mt-0" >
+
+                <nav class="navbar navbar-light bg-light" >
+                    <div>
+                        <h3>Админ панель</h3>
+
+                        <div class="btn-group" role="group" aria-label="Панель действий">
+                            <a href="/admin" class="btn btn-light" role="button"
+                               data-bs-toggle="button" aria-pressed="true">
+                                <p class="text-primary">Таблица</p>
+                            </a>
+                            <a href="/add" class="btn btn-primary" tabindex="-1"
+                               aria-disabled="true" role="button" data-bs-toggle="button" style="background: #ffffff">
+                                <p class="text-secondary">Новый пользователь</p>
+
+                            </a>
+                        </div>
+                    <h5>Добавление нового пользователя</h5>
+                    </div>
+                </nav>
+
+
+                        <div  class="container" style="background: #ffffff">
+                            <div class="row-2">
+                                <div class="col-lg-6 mx-auto ">
+
+                                    <form th:action="@{/add}" th:method="POST" th:object="${user}"
+                                          class="text-center">
+
+                                        <label for="name">Имя:</label>
+
+                                        <input class="form-control" type="text" th:field="*{name}" id="name" name="name" required/>
+
+
+                                        <br>
+
+                                        <label for="surname">Фамилия:</label>
+                                        <input class="form-control" type="text" th:field="*{surname}" id="surname" name="surname" required/>
+
+                                        <br>
+                                        <label for="username">Логин пользователя:</label>
+                                        <input class="form-control" type="text" th:field="*{username}" id="username" name="username"
+                                               required/>
+                                        <div style="color:red" th:if="${#fields.hasErrors('username')}"
+                                             th:errors="*{username}">Username error
+                                        </div>
+                                        <br>
+                                        <label for="age">Возраст:</label>
+                                        <input class="form-control" type="text" th:field="*{age}" id="age" name="age" required/>
+                                        <br>
+                                        <label for="city">Город:</label>
+                                        <input class="form-control" type="text" th:field="*{city}" id="city" name="city" required/>
+                                        <br>
+                                        <label for="password">Пароль:</label>
+                                        <input class="form-control" type="password" th:field="*{password}" id="password" name="password"
+                                               required/>
+
+
+                                        <br>
+                                        <input class="btn btn-success"  type="submit" value="Добавить нового пользователя"/>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

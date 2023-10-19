@@ -33,7 +33,7 @@ public class Util implements ApplicationRunner {
 
         List<Role> roleAdmin = List.of(userAdmin);
         List<Role> roleUser = List.of(userUser);
-        List<Role> roleUserAndAdmin = List.of(userUser, userAdmin);
+        List<Role> roleUserAndAdmin = List.of(userAdmin, userUser);
 
         roleServiceImpl.save(userUser);
         roleServiceImpl.save(userAdmin);

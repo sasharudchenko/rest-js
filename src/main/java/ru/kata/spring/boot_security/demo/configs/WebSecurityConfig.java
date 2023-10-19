@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -67,6 +68,8 @@ authenticationManagerBuilder.userDetailsService(userServiceImpl)
         return daoAuthenticationProvider;
     }
 
+}
+
     // аутентификация inMemory
 //    @Bean
 //    @Override
@@ -80,4 +83,3 @@ authenticationManagerBuilder.userDetailsService(userServiceImpl)
 //
 //        return new InMemoryUserDetailsManager(user);
 //    }
-}
