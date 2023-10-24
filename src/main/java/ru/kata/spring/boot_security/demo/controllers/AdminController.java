@@ -1,12 +1,10 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.*;
 import ru.kata.spring.boot_security.demo.util.UserValidator;
@@ -14,21 +12,19 @@ import ru.kata.spring.boot_security.demo.util.UserValidator;
 import javax.swing.*;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.List;
-import java.util.ListResourceBundle;
 
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private UserService userServiceImpl;
+    private UserService userService;
     private RoleService roleService;
     private UserValidator userValidator;
     private RegistrationService registrationService;
     @Autowired
     public AdminController(UserServiceImpl userServiceImpl, RoleServiceImpl roleService,
                            UserValidator userValidator, RegistrationService registrationService) {
-        this.userServiceImpl = userServiceImpl;
+        this.userService = userServiceImpl;
         this.roleService = roleService;
         this.userValidator = userValidator;
         this.registrationService = registrationService;
@@ -36,13 +32,20 @@ public class AdminController {
 
     @GetMapping()
     public String allUsers(Model model, Principal principal) {
-        User user = userServiceImpl.findByUsername(principal.getName());
+        User user = userService.findByUsername(principal.getName());
+        JPasswordField field = new JPasswordField();
 
-        model.addAttribute("allUser", userServiceImpl.allUsers());
+        model.addAttribute("allUser", userService.allUsers());
         model.addAttribute("principal", user);
         model.addAttribute("count1", user.getRoles().size()== 1 );
         model.addAttribute("count2", user.getRoles().size()== 2 );
         model.addAttribute("listRoles", roleService.listRoles());
+
+
+
+
+
+
 
 
 
@@ -68,7 +71,7 @@ public class AdminController {
 //    }
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userServiceImpl.getById(id));
+        model.addAttribute("user", userService.getById(id));
         model.addAttribute("listRoles", roleService.listRoles());
 
         return "admin.edit";
@@ -76,13 +79,35 @@ public class AdminController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user,
                          @PathVariable("id") long id) {
-        userServiceImpl.updateUser(user, id);
+        userService.updateUser(user, id);
         return "redirect:/admin";
     }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        userServiceImpl.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/admin";
+    }
+
+    @PostMapping("/add")
+    public String add(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "/newUser";
+        }
+        registrationService.register(user);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/add")
+    public String registrationPage(@ModelAttribute("user") User newUser, Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName());
+        model.addAttribute("allUser", userService.allUsers());
+        model.addAttribute("principal", user);
+        model.addAttribute("count1", user.getRoles().size()== 1 );
+        model.addAttribute("count2", user.getRoles().size()== 2 );
+        model.addAttribute("listRoles", roleService.listRoles());
+
+        return "newUser";
     }
 
 

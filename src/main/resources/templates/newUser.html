@@ -67,7 +67,7 @@
                                data-bs-toggle="button" aria-pressed="true">
                                 <p class="text-primary">Таблица</p>
                             </a>
-                            <a href="/add" class="btn btn-primary" tabindex="-1"
+                            <a href="/admin/add" class="btn btn-primary" tabindex="-1"
                                aria-disabled="true" role="button" data-bs-toggle="button" style="background: #ffffff">
                                 <p class="text-secondary">Новый пользователь</p>
 
@@ -82,7 +82,7 @@
                             <div class="row-2">
                                 <div class="col-lg-6 mx-auto ">
 
-                                    <form th:action="@{/add}" th:method="POST" th:object="${user}"
+                                    <form th:action="@{/admin/add}" th:method="POST" th:object="${user}"
                                           class="text-center">
 
                                         <label for="name">Имя:</label>
@@ -112,6 +112,19 @@
                                         <label for="password">Пароль:</label>
                                         <input class="form-control" type="password" th:field="*{password}" id="password" name="password"
                                                required/>
+                                        <div>
+                                            <p>Роль</p>
+
+                                            <select name="roles[]" multiple>
+                                                <option th:value="${listRoles.get(0).getId()}"
+                                                        th:text="USER"
+                                                        selected></option>
+                                                <option th:value="${listRoles.get(1).getId()}"
+                                                        th:text="ADMIN"></option>
+
+                                            </select>
+
+                                        </div>
 
 
                                         <br>

@@ -28,16 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/index").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin().successHandler(successUserHandler)
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll();
+
         http.authorizeRequests()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")//authenticated()
@@ -48,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/welcome")
+                .logout().logoutSuccessUrl("/login")
                 .permitAll();
     }
 
@@ -70,16 +61,3 @@ authenticationManagerBuilder.userDetailsService(userServiceImpl)
 
 }
 
-    // аутентификация inMemory
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("user")
-//                        .roles("USER")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }

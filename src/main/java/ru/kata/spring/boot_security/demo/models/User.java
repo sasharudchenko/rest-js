@@ -4,6 +4,7 @@ import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import javax.swing.*;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -15,6 +16,10 @@ import java.util.stream.Collectors;
 @Entity
 @Table
 public class User implements UserDetails {
+
+
+
+
     @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

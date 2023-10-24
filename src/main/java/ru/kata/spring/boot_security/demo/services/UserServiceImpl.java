@@ -6,6 +6,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ru.kata.spring.boot_security.demo.models.Role;
@@ -48,13 +50,13 @@ public class UserServiceImpl implements UserService {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
     }
 
-   // @Transactional()
+
     @Override
     public User getUser(long id) {
         return userRepository.getById(id);
     }
     @Override
-   // @Transactional
+
     public List<User> allUsers() {
         return userRepository.findAll();
     }
@@ -62,13 +64,16 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(User user, long id) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         User userBD = userRepository.getById(id);
         userBD.setName(user.getName());
         userBD.setSurname(user.getSurname());
         userBD.setUsername(user.getUsername());
         userBD.setAge(user.getAge());
         userBD.setCity(user.getCity());
-        userBD.setPassword(user.getPassword());
+        if (!userBD.getPassword().equals(user.getPassword())) {
+            userBD.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userBD.setRoles(user.getRoles());
 
         userRepository.save(userBD);
@@ -80,7 +85,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    //@Transactional
+
     @Override
     public User getById(Long id) {
         return userRepository.findById(id).get();

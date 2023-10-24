@@ -36,10 +36,6 @@ public class RegistrationServiceImpl implements RegistrationService {
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Role defRole = roleRepository.findByName("ROLE_USER");
-        List<Role> roles = List.of(defRole);
-        user.setRoles(roles);
-
         userRepository.save(user);
     }
 }

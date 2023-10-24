@@ -30,19 +30,6 @@ public class UserControllers {
         model.addAttribute("principal", user);
         model.addAttribute("count1", user.getRoles().size()== 1 );
         model.addAttribute("count2", user.getRoles().size()== 2 );
-//        System.out.println("-------------------");
-//        System.out.println("-------------------");
-//        for (Role role : user.getRoles()) {
-//            System.out.println(role.getName());
-//        }
-//        System.out.println("-------------------");
-//        System.out.println("-------------------");
-//        boolean b = user.getRoles().size()== 1;
-//        System.out.println(b);
-//
-//
-//        // model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
-//       // model.addAttribute("user", userService.getUser(id));
         return "user.userById";
     }
 }
