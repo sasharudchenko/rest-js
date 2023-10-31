@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,9 +14,10 @@ import ru.kata.spring.boot_security.demo.util.UserValidator;
 import javax.swing.*;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
     private UserService userService;
@@ -31,7 +34,7 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String allUsers(Model model, Principal principal) {
+    public ResponseEntity<List<User>> allUsers(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         JPasswordField field = new JPasswordField();
 
@@ -41,26 +44,7 @@ public class AdminController {
         model.addAttribute("count2", user.getRoles().size()== 2 );
         model.addAttribute("listRoles", roleService.listRoles());
 
-
-
-
-
-
-
-
-
-//        model.addAttribute("user", userServiceImpl.allUsers().listIterator().next());
-//        System.out.println(userServiceImpl.allUsers().listIterator().next());
-//        for (User userFor : userServiceImpl.allUsers()) {
-//            System.out.println(userFor.toString());
-//        }
-
-
-
-
-
-
-        return "admin.all";
+        return new ResponseEntity<>(userService.allUsers(), HttpStatus.OK);
     }
 
 //    @GetMapping()
@@ -70,36 +54,36 @@ public class AdminController {
 //
 //    }
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable("id") long id, Model model) {
+    public ResponseEntity<User> edit(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getById(id));
         model.addAttribute("listRoles", roleService.listRoles());
 
-        return "admin.edit";
+        return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
     }
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user,
+    public ResponseEntity<HttpStatus> update(@RequestBody @ModelAttribute("user") User user,
                          @PathVariable("id") long id) {
         userService.updateUser(user, id);
-        return "redirect:/admin";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
         userService.deleteUser(id);
-        return "redirect:/admin";
+        return  ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> add(@RequestBody @ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            return "/newUser";
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         registrationService.register(user);
-        return "redirect:/admin";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping("/add")
-    public String registrationPage(@ModelAttribute("user") User newUser, Model model, Principal principal) {
+    public ResponseEntity<HttpStatus> registrationPage(@ModelAttribute("user") User newUser, Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("allUser", userService.allUsers());
         model.addAttribute("principal", user);
@@ -107,7 +91,7 @@ public class AdminController {
         model.addAttribute("count2", user.getRoles().size()== 2 );
         model.addAttribute("listRoles", roleService.listRoles());
 
-        return "newUser";
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 

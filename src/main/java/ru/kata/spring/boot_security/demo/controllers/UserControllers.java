@@ -1,9 +1,14 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.RoleService;
@@ -12,7 +17,7 @@ import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 import java.security.Principal;
 
-@Controller
+@RestController
 public class UserControllers {
 
     private UserService userServiceImpl;
@@ -23,13 +28,13 @@ public class UserControllers {
         this.roleService = roleService;
     }
 
+
     @GetMapping("/user")
-    public String userByUsername(Model model, Principal principal) {
+    public ResponseEntity<User> userByUsername( Principal principal) {
         User user = userServiceImpl.findByUsername(principal.getName());
-        model.addAttribute("allUser", userServiceImpl.allUsers());
-        model.addAttribute("principal", user);
-        model.addAttribute("count1", user.getRoles().size()== 1 );
-        model.addAttribute("count2", user.getRoles().size()== 2 );
-        return "user.userById";
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+
 }
