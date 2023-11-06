@@ -1,9 +1,12 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.tomcat.util.buf.StringUtils;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.swing.*;
 
 import javax.persistence.*;
@@ -12,12 +15,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-
+@JsonSerialize
 @Entity
 @Table
 public class User implements UserDetails {
-
-
 
 
     @Column(name = "id")
@@ -38,13 +39,16 @@ public class User implements UserDetails {
     @Column(name = "city")
     private String city;
     @ManyToMany(fetch = FetchType.LAZY)
+    @Cascade(value = {org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE,
+            org.hibernate.annotations.CascadeType.PERSIST})
+
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-    public User(){
+
+    public User() {
 
     }
-
 
 
     public User(String username, String name, String surname, int age, String city, List<Role> roles) {

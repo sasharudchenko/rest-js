@@ -19,7 +19,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     private UserRepository userRepository;
 
-     private RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
 
     @Autowired

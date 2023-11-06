@@ -24,14 +24,16 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
     //@Transactional
     @Override
     public User findByUsername(String username) {
-       return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
 
@@ -43,7 +45,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("Такого пользователя не существует");
         }
         return new org.springframework.security.core.userdetails.User
-                (user.get().getUsername(),user.get().getPassword(), mapRolesToAuthorities(user.get().getRoles()) );
+                (user.get().getUsername(), user.get().getPassword(), mapRolesToAuthorities(user.get().getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
@@ -55,6 +57,7 @@ public class UserServiceImpl implements UserService {
     public User getUser(long id) {
         return userRepository.getById(id);
     }
+
     @Override
 
     public List<User> allUsers() {
@@ -79,6 +82,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userBD);
 
     }
+
     @Transactional
     @Override
     public void deleteUser(long id) {
@@ -90,14 +94,12 @@ public class UserServiceImpl implements UserService {
     public User getById(Long id) {
         return userRepository.findById(id).get();
     }
+
     @Transactional
     @Override
     public void saveUser(User user) {
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
-
-
-
 
 
 }

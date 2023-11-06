@@ -18,6 +18,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
 
     private UserServiceImpl userServiceImpl;
+
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImpl userServiceImpl) {
         this.successUserHandler = successUserHandler;
@@ -25,12 +26,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
+//                .antMatchers("/api/admin/**").hasAnyRole("ADMIN")
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")//authenticated()
                 .antMatchers("/welcome", "/registration").permitAll()
                 .anyRequest().authenticated()
@@ -42,15 +44,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutSuccessUrl("/login")
                 .permitAll();
     }
+//    @Override protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/api/user").permitAll()
+//                .antMatchers("/api/admin/**").hasAnyRole("ROLE_ADMIN")
+//
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll()
+//                .and().httpBasic();
+//        http.cors().disable().csrf().disable(); }
 
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-authenticationManagerBuilder.userDetailsService(userServiceImpl)
-        .passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.userDetailsService(userServiceImpl)
+                .passwordEncoder(passwordEncoder());
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();

@@ -17,6 +17,7 @@ public class SuccessUserHandler implements AuthenticationSuccessHandler {
 
 
     private UserServiceImpl userServiceImpl;
+
     @Autowired
     public SuccessUserHandler(UserServiceImpl userServiceImpl) {
         this.userServiceImpl = userServiceImpl;

@@ -1,74 +1,22 @@
-// getCurrentUser()
-//
-// function getCurrentUser() {
-//     fetch("http://localhost:8080/user")
-//         .then(res => res.json())
-//         .then(js => {
-//             $('#emailCurrentUser').append(`<span>${js.email}</span>`)
-//             $('#roleCurrentUser').append(`<span>${js.shortRole}</span>`)
-//             const user = `$(
-//                     <tr>
-//                         <td>${js.id}</td>
-//                         <td>${js.firstName}</td>
-//                         <td>${js.lastName}</td>
-//                         <td>${js.age}</td>
-//                         <td>${js.email}</td>
-//                         <td>${js.shortRole}</td>
-//                     </tr>)`;
-//             $('#oneUser').append(user)
-//         })
-// }
-fetchUserData();
-function fetchUserData() {
-    fetch("http://localhost:8080/user")
-        .then(response => response.json())
-        .then(data => {
+oneUser()
+function oneUser() {
+    fetch("/api/user")
+        .then(res => res.json())
+        .then(js => {
+            $('#username').append(`<a class="navbar-brand">${js.username}</a>`)
 
-            const userTable = document.getElementById('user');
-            data.forEach(user => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>${user.surname}</td>
-                    <td>${user.city}</td>
-                    <td>${user.age}</td>
-                    <td>${user.username}</td>
-                    <td>${user.role}</td>
-                    <tr/>
-                `;
-                userTable.appendChild(row);
-            });
+            $('#role').append(`<a class="navbar-brand">${js.roles.map((el) => el.name.toString())}</a>`)
+
+            const user = `$(
+                    <tr>
+                        <td>${js.id}</td>
+                        <td>${js.name}</td>
+                        <td>${js.surname}</td>
+                        <td>${js.city}</td>
+                        <td>${js.age}</td>
+                        <td>${js.username}</td>
+                        <td>${js.roles.map((el) => el.name.toString())}</td>
+                    </tr>)`;
+            $('#user').append(user)
         })
-        .catch(error => {
-            console.error('Ошибка:', error);
-        });
 }
-
-// function fetchUserData() {
-//     $.ajax({
-//         url: "http://localhost:8080/user",
-//         method: 'GET',
-//         success: function (data) {
-//             const userTable = $('#user');
-//             data.forEach(user => {
-//                 const row = `
-//                     <tr>
-//                         <td>${user.id}</td>
-//                         <td>${user.name}</td>
-//                         <td>${user.surname}</td>
-//                         <td>${user.city}</td>
-//                         <td>${user.age}</td>
-//                         <td>${user.username}</td>
-//                         <td>${user.role}</td>
-//                     </tr>
-//                 `;
-//                 userTable.append(row);
-//             });
-//         },
-//         error: function (error) {
-//             console.error('Ошибка:', error);
-//         }
-//     });
-// }
-fetchUserData();

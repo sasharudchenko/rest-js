@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,10 +16,13 @@ public class Role implements GrantedAuthority {
     private Long id;
     @Column
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles")
+    @Cascade(value = {org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.MERGE,
+            org.hibernate.annotations.CascadeType.PERSIST})
     private List<User> users;
 
-    public Role() {}
+    public Role() {
+    }
 
 
     public Role(String name) {

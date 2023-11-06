@@ -11,12 +11,14 @@ import ru.kata.spring.boot_security.demo.services.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 import java.util.List;
+
 @Component
 public class Util implements ApplicationRunner {
 
     private UserServiceImpl userServiceImpl;
 
     private RoleServiceImpl roleServiceImpl;
+
     @Autowired
     public Util(UserServiceImpl userServiceImpl, RoleServiceImpl roleServiceImpl) {
         this.userServiceImpl = userServiceImpl;
