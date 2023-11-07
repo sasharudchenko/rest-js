@@ -24,10 +24,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //@Transactional
@@ -67,7 +69,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(User user, long id) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         User userBD = userRepository.getById(id);
         userBD.setName(user.getName());
         userBD.setSurname(user.getSurname());
